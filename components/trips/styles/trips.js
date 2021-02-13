@@ -2,12 +2,19 @@ import styled from "styled-components";
 
 const Container = styled.div`
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 82px;
+    justify-content: center;
+    @media(min-width: 1114px) {
+        grid-template-columns: auto auto;
+        column-gap: 82px;
+        row-gap: 38px;
+    }
 `;
 
 const CityNameContainer = styled.div`
     background-color: #000000;
+    margin-bottom: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
 `;
 
 const CityName = styled.p`
@@ -21,4 +28,4 @@ const CityName = styled.p`
     color: #FFFFFF;
 `;
 
-export {Container, CityNameContainer, CityName } 
+export { Container, CityNameContainer, CityName } 

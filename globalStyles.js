@@ -11,4 +11,8 @@ export const GlobalStyles = createGlobalStyle`
         a {
             text-decoration: none;
         }
+
+        span {
+            display: block;
+        }
     }`;

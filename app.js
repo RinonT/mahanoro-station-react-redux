@@ -1,10 +1,22 @@
 import React from 'react';
-import Home from './pages/home';
+import { Switch, Route } from 'react-router-dom';
+import { Home, NextTrips } from './pages';
+import BookSeats from './pages/bookSeats';
 
 export default function App() {
     return (
         <React.Fragment>
-           <Home />
+            <Switch>
+                <Route exact path="/">
+                    <Home />
+                </Route>
+                <Route exact path="/city/:destination">
+                    <NextTrips />
+                </Route>
+                <Route exact path="/trip/:tripId">
+                    <BookSeats />
+                </Route>
+            </Switch>
         </React.Fragment>
     )
 }

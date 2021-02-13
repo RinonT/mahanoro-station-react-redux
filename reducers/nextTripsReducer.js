@@ -1,10 +1,11 @@
-function trips(state=[], action) {
+function nextTrips(state=[], action) {
     switch (action.type) {
-        case "GET_TRIPS":
+        
+        case "SET_NEXT_TRIPS":
             return action.payload; 
         default:
             return state;
     }
 }
 
-export { trips };
+export { nextTrips };

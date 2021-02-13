@@ -38179,6 +38179,10 @@ const GlobalStyles = (0, _styledComponents.createGlobalStyle)`
         a {
             text-decoration: none;
         }
+
+        span {
+            display: block;
+        }
     }`;
 exports.GlobalStyles = GlobalStyles;
 },{"styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"node_modules/redux-thunk/es/index.js":[function(require,module,exports) {
@@ -38218,7 +38222,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _default = {
   trips: [],
-  city: []
+  nextTrips: [],
+  BookingSeats: {}
 };
 exports.default = _default;
 },{}],"reducers/tripsReducer.js":[function(require,module,exports) {
@@ -38232,7 +38237,41 @@ exports.trips = trips;
 function trips(state = [], action) {
   switch (action.type) {
     case "GET_TRIPS":
-      break;
+      return action.payload;
+
+    default:
+      return state;
+  }
+}
+},{}],"reducers/nextTripsReducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.nextTrips = nextTrips;
+
+function nextTrips(state = [], action) {
+  switch (action.type) {
+    case "SET_NEXT_TRIPS":
+      return action.payload;
+
+    default:
+      return state;
+  }
+}
+},{}],"reducers/bookingSeatsReducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.bookingSeats = bookingSeats;
+
+function bookingSeats(state = [], action) {
+  switch (action.type) {
+    case "SET_BOOKING_SEATS":
+      return [...state, action.payload];
 
     default:
       return state;
@@ -38250,12 +38289,18 @@ var _redux = require("redux");
 
 var _tripsReducer = require("./tripsReducer");
 
+var _nextTripsReducer = require("./nextTripsReducer");
+
+var _bookingSeatsReducer = require("./bookingSeatsReducer");
+
 var _default = (0, _redux.combineReducers)({
-  trips: _tripsReducer.trips
+  trips: _tripsReducer.trips,
+  nextTrips: _nextTripsReducer.nextTrips,
+  bookingSeats: _bookingSeatsReducer.bookingSeats
 });
 
 exports.default = _default;
-},{"redux":"node_modules/redux/es/redux.js","./tripsReducer":"reducers/tripsReducer.js"}],"store.js":[function(require,module,exports) {
+},{"redux":"node_modules/redux/es/redux.js","./tripsReducer":"reducers/tripsReducer.js","./nextTripsReducer":"reducers/nextTripsReducer.js","./bookingSeatsReducer":"reducers/bookingSeatsReducer.js"}],"store.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38283,15 +38328,31 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getTrips = getTrips;
+exports.setNextTrips = setNextTrips;
+exports.setBookingSeats = setBookingSeats;
 
 function getTrips() {
   return async dispatch => {
     const res = await fetch(`https://gist.githubusercontent.com/Pinois/36bb5fbf9b6a686f0baf4006dd137bca/raw/a40d8b3f696a75f388db286d57bdd05a925fa0e7/trips.json`);
     const trips = await res.json();
     return dispatch({
-      type: "GET_SONGS",
+      type: "GET_TRIPS",
       payload: trips
     });
+  };
+}
+
+function setNextTrips(trips) {
+  return {
+    type: "SET_NEXT_TRIPS",
+    payload: trips
+  };
+}
+
+function setBookingSeats(trip) {
+  return {
+    type: "SET_BOOKING_SEATS",
+    payload: trip
   };
 }
 },{}],"components/header/styles/header.js":[function(require,module,exports) {
@@ -38406,12 +38467,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const Container = _styledComponents.default.div`
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 82px;
+    justify-content: center;
+    @media(min-width: 1114px) {
+        grid-template-columns: auto auto;
+        column-gap: 82px;
+        row-gap: 38px;
+    }
 `;
 exports.Container = Container;
 const CityNameContainer = _styledComponents.default.div`
     background-color: #000000;
+    margin-bottom: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
 `;
 exports.CityNameContainer = CityNameContainer;
 const CityName = _styledComponents.default.p`
@@ -38459,7 +38527,150 @@ Trips.CityName = function TripsCityName({
 }) {
   return /*#__PURE__*/_react.default.createElement(_trips.CityName, restProps, children);
 };
-},{"react":"node_modules/react/index.js","./styles/trips":"components/trips/styles/trips.js"}],"components/index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","./styles/trips":"components/trips/styles/trips.js"}],"components/nextTrips/styles/nextTrips.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Button = exports.ButtonContainer = exports.SeatsInfo = exports.Date = exports.Time = exports.Day = exports.Image = exports.Frame = exports.Container = void 0;
+
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const Container = _styledComponents.default.div`
+        display: grid;
+        justify-content: center;
+
+    @media(min-width: 1114px){
+        display: flex;
+        justify-content: space-between;
+    }
+`;
+exports.Container = Container;
+const Frame = _styledComponents.default.div``;
+exports.Frame = Frame;
+const Image = _styledComponents.default.img`
+    max-width: 100%;
+`;
+exports.Image = Image;
+const Day = _styledComponents.default.span`
+    font-weight: normal;
+    font-size: 36px;
+    line-height: 43px;
+    color: #FF8906
+`;
+exports.Day = Day;
+const Time = _styledComponents.default.span`${Day}`;
+exports.Time = Time;
+const Date = _styledComponents.default.span`
+    ${Day};
+    color: #000000;
+`;
+exports.Date = Date;
+const SeatsInfo = _styledComponents.default.span`${Date}`;
+exports.SeatsInfo = SeatsInfo;
+const ButtonContainer = _styledComponents.default.div`
+    background: #E53170;
+    margin-bottom: 32px;
+`;
+exports.ButtonContainer = ButtonContainer;
+const Button = _styledComponents.default.button`
+    ${Day}; 
+    background: #E53170;
+    margin-bottom: 32px;
+    padding-top: 31px;
+    padding-bottom: 31px;
+    padding-left: 25px;
+    padding-right: 25px;
+    color: #FFFFFF;
+    border: transparent;
+`;
+exports.Button = Button;
+},{"styled-components":"node_modules/styled-components/dist/styled-components.browser.esm.js"}],"components/nextTrips/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = NextTrips;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _nextTrips = require("./styles/nextTrips");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function NextTrips({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_nextTrips.Container, restProps, children);
+}
+
+NextTrips.Frame = function NextTripsFrame({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_nextTrips.Frame, restProps, children);
+};
+
+NextTrips.Image = function NextTripsImage({
+  src,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_nextTrips.Image, _extends({
+    src: src
+  }, restProps));
+};
+
+NextTrips.Day = function NextTripsDay({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_nextTrips.Day, restProps, children);
+};
+
+NextTrips.Time = function NextTripsTime({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_nextTrips.Time, restProps, children);
+};
+
+NextTrips.Date = function NextTripsDate({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_nextTrips.Date, restProps, children);
+};
+
+NextTrips.SeatsInfo = function NextTripsSeatsInfo({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_nextTrips.SeatsInfo, restProps, children);
+};
+
+NextTrips.ButtonContainer = function NextTripsButtonContainer({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_nextTrips.ButtonContainer, restProps, children);
+};
+
+NextTrips.Button = function NextTripsButton({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_nextTrips.Button, restProps, children);
+};
+},{"react":"node_modules/react/index.js","./styles/nextTrips":"components/nextTrips/styles/nextTrips.js"}],"components/bookSeats/index.js":[function(require,module,exports) {
+
+},{}],"components/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38477,13 +38688,29 @@ Object.defineProperty(exports, "Trips", {
     return _trips.default;
   }
 });
+Object.defineProperty(exports, "NextTrips", {
+  enumerable: true,
+  get: function () {
+    return _nextTrips.default;
+  }
+});
+Object.defineProperty(exports, "BookSeats", {
+  enumerable: true,
+  get: function () {
+    return _bookSeats.default;
+  }
+});
 
 var _header = _interopRequireDefault(require("./header"));
 
 var _trips = _interopRequireDefault(require("./trips"));
 
+var _nextTrips = _interopRequireDefault(require("./nextTrips"));
+
+var _bookSeats = _interopRequireDefault(require("./bookSeats"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./header":"components/header/index.js","./trips":"components/trips/index.js"}],"containers/header.js":[function(require,module,exports) {
+},{"./header":"components/header/index.js","./trips":"components/trips/index.js","./nextTrips":"components/nextTrips/index.js","./bookSeats":"components/bookSeats/index.js"}],"containers/header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38508,9 +38735,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = HomeContainer;
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _reactRedux = require("react-redux");
+
+var _reactRouterDom = require("react-router-dom");
 
 var _actions = require("../actions");
 
@@ -38520,11 +38749,116 @@ var _header = _interopRequireDefault(require("./header"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function HomeContainer() {
-  console.log((0, _actions.getTrips)());
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_header.default, null), /*#__PURE__*/_react.default.createElement(_components.Trips, null, /*#__PURE__*/_react.default.createElement(_components.Trips.CityNameContainer, null, /*#__PURE__*/_react.default.createElement(_components.Trips.CityName, null, "Antananarivo"))));
+  const trips = (0, _reactRedux.useSelector)(state => state.trips);
+  const dispatch = (0, _reactRedux.useDispatch)();
+  (0, _react.useEffect)(() => {
+    dispatch((0, _actions.getTrips)());
+  }, []); // City's element
+
+  const cityNamesArr = trips !== [] && trips.map(trip => trip.destination); // Remove duplicated names in the array
+
+  const removeDuplicatedCityNames = cityNamesArr.filter((data, index) => {
+    return cityNamesArr.indexOf(data) === index;
+  });
+  const cityNamesEl = trips !== [] && removeDuplicatedCityNames.map(destination => {
+    return /*#__PURE__*/_react.default.createElement(_components.Trips.CityNameContainer, {
+      key: destination
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: `/city/${destination}`
+    }, /*#__PURE__*/_react.default.createElement(_components.Trips.CityName, null, destination)));
+  });
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_header.default, null), /*#__PURE__*/_react.default.createElement(_components.Trips, null, cityNamesEl));
 }
-},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../actions":"actions/index.js","../components":"components/index.js","./header":"containers/header.js"}],"containers/index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../actions":"actions/index.js","../components":"components/index.js","./header":"containers/header.js"}],"containers/nextTrips.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = NextTripsContainer;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _reactRedux = require("react-redux");
+
+var _actions = require("../actions");
+
+var _components = require("../components");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function NextTripsContainer() {
+  const trips = (0, _reactRedux.useSelector)(state => state.trips);
+  const nextTrips = (0, _reactRedux.useSelector)(state => state.nextTrips);
+  const dispatch = (0, _reactRedux.useDispatch)();
+  const {
+    destination
+  } = (0, _reactRouterDom.useParams)(); // Get the array of trips that we have per destination
+
+  const nextTripsDetails = trips !== [] && trips.filter(trip => trip.destination === destination);
+  (0, _react.useEffect)(() => {
+    dispatch((0, _actions.setNextTrips)(nextTripsDetails));
+  }, [trips]); // Number of seats available
+
+  const numberOfSeats = arr => {
+    return arr.filter(seat => seat.isAvailable).length;
+  };
+
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_components.Header.PageTitle, null, "Next trips to", /*#__PURE__*/_react.default.createElement("span", null, destination)), nextTrips && nextTrips.map(trip => {
+    return /*#__PURE__*/_react.default.createElement(_components.NextTrips, {
+      key: trip.id
+    }, /*#__PURE__*/_react.default.createElement(_components.NextTrips.Frame, null, /*#__PURE__*/_react.default.createElement(_components.NextTrips.Image, {
+      src: "",
+      alt: "taxi-brousse"
+    })), /*#__PURE__*/_react.default.createElement(_components.NextTrips.Frame, null, /*#__PURE__*/_react.default.createElement(_components.NextTrips.Day, null, trip.departureTime), /*#__PURE__*/_react.default.createElement(_components.NextTrips.Time, null, trip.departureTime)), /*#__PURE__*/_react.default.createElement(_components.NextTrips.Frame, null, /*#__PURE__*/_react.default.createElement(_components.NextTrips.Date, null, trip.departureTime), /*#__PURE__*/_react.default.createElement(_components.NextTrips.SeatsInfo, null, numberOfSeats(trip.seats) < 2 ? `${numberOfSeats(trip.seats)} seat` : `${numberOfSeats(trip.seats)} seats`, " left")), /*#__PURE__*/_react.default.createElement(_components.NextTrips.Frame, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: `/trip/${trip.id}`
+    }, /*#__PURE__*/_react.default.createElement(_components.NextTrips.Button, null, "Book a seat"))));
+  }));
+}
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","react-redux":"node_modules/react-redux/es/index.js","../actions":"actions/index.js","../components":"components/index.js"}],"containers/bookSeats.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = BookSeatsContainer;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouter = require("react-router");
+
+var _reactRedux = require("react-redux");
+
+var _actions = require("../actions");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function BookSeatsContainer() {
+  const {
+    tripId
+  } = (0, _reactRouter.useParams)();
+  const nextTrips = (0, _reactRedux.useSelector)(state => state.nextTrips);
+  const bookingSeat = (0, _reactRedux.useSelector)(state => state.bookingSeats);
+  const dispatch = (0, _reactRedux.useDispatch)();
+  const bookingSeatDetails = nextTrips.filter(trip => trip.id === tripId);
+  (0, _react.useEffect)(() => {
+    dispatch((0, _actions.setBookingSeats)(bookingSeatDetails));
+  }, []);
+  console.log(bookingSeat);
+  return /*#__PURE__*/_react.default.createElement("div", null, "Hello");
+}
+},{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-redux":"node_modules/react-redux/es/index.js","../actions":"actions/index.js"}],"containers/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38536,11 +38870,27 @@ Object.defineProperty(exports, "HomeContainer", {
     return _home.default;
   }
 });
+Object.defineProperty(exports, "NextTripsContainer", {
+  enumerable: true,
+  get: function () {
+    return _nextTrips.default;
+  }
+});
+Object.defineProperty(exports, "BookSeatsContainer", {
+  enumerable: true,
+  get: function () {
+    return _bookSeats.default;
+  }
+});
 
 var _home = _interopRequireDefault(require("./home"));
 
+var _nextTrips = _interopRequireDefault(require("./nextTrips"));
+
+var _bookSeats = _interopRequireDefault(require("./bookSeats"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./home":"containers/home.js"}],"pages/home.js":[function(require,module,exports) {
+},{"./home":"containers/home.js","./nextTrips":"containers/nextTrips.js","./bookSeats":"containers/bookSeats.js"}],"pages/home.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38557,6 +38907,64 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function Home() {
   return /*#__PURE__*/_react.default.createElement(_containers.HomeContainer, null);
 }
+},{"react":"node_modules/react/index.js","../containers":"containers/index.js"}],"pages/nextTrips.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = NextTrips;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _containers = require("../containers");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function NextTrips() {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_containers.NextTripsContainer, null));
+}
+},{"react":"node_modules/react/index.js","../containers":"containers/index.js"}],"pages/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "Home", {
+  enumerable: true,
+  get: function () {
+    return _home.default;
+  }
+});
+Object.defineProperty(exports, "NextTrips", {
+  enumerable: true,
+  get: function () {
+    return _nextTrips.default;
+  }
+});
+
+var _home = _interopRequireDefault(require("./home"));
+
+var _nextTrips = _interopRequireDefault(require("./nextTrips"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+},{"./home":"pages/home.js","./nextTrips":"pages/nextTrips.js"}],"pages/bookSeats.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = bookSeats;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _containers = require("../containers");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function bookSeats() {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_containers.BookSeatsContainer, null));
+}
 },{"react":"node_modules/react/index.js","../containers":"containers/index.js"}],"app.js":[function(require,module,exports) {
 "use strict";
 
@@ -38567,14 +38975,27 @@ exports.default = App;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _home = _interopRequireDefault(require("./pages/home"));
+var _reactRouterDom = require("react-router-dom");
+
+var _pages = require("./pages");
+
+var _bookSeats = _interopRequireDefault(require("./pages/bookSeats"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function App() {
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_home.default, null));
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/"
+  }, /*#__PURE__*/_react.default.createElement(_pages.Home, null)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/city/:destination"
+  }, /*#__PURE__*/_react.default.createElement(_pages.NextTrips, null)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    exact: true,
+    path: "/trip/:tripId"
+  }, /*#__PURE__*/_react.default.createElement(_bookSeats.default, null))));
 }
-},{"react":"node_modules/react/index.js","./pages/home":"pages/home.js"}],"index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./pages":"pages/index.js","./pages/bookSeats":"pages/bookSeats.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
