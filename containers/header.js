@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from '../components'
 
 export default function HeaderContainer() {
@@ -7,7 +8,7 @@ export default function HeaderContainer() {
         <Header>
             <Header.Title>Mahanoro station</Header.Title>
             <Header.LinkContainer>
-                <Header.Link>My account</Header.Link>
+                <Link to="/account/:accountId">My account</Link>
             </Header.LinkContainer>
         </Header>
         </React.Fragment>

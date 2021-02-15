@@ -20,13 +20,15 @@ const Title = styled.h1`
 const LinkContainer = styled.div`
     padding-top: 28px;
     padding-bottom: 28px;
+
+    a {
+        font-weight: normal;
+        font-size: 24px;
+        line-height: 28px;
+        color: #A7A9BE;
+    }
 `;
-const Link = styled.a`
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
-    color: #A7A9BE;
-`;
+const Link = styled.a``;
 
 const PageTitle = styled.h2`
     font-style: normal;

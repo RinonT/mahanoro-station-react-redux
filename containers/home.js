@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getTrips } from '../actions';
 import { Trips } from '../components';
-import HeaderContainer from './header';
+
 
 
 export default function HomeContainer() { 
@@ -33,7 +33,6 @@ export default function HomeContainer() {
 
     return (
         <React.Fragment>
-            <HeaderContainer />
             <Trips>
                 {cityNamesEl}
             </Trips>

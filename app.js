@@ -1,11 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Home, NextTrips } from './pages';
-import BookSeats from './pages/bookSeats';
+import { Home, NextTrips, BookSeats, Account } from './pages';
+import HeaderContainer from './containers/header';
 
 export default function App() {
     return (
         <React.Fragment>
+            <HeaderContainer />
             <Switch>
                 <Route exact path="/">
                     <Home />
@@ -15,6 +16,9 @@ export default function App() {
                 </Route>
                 <Route exact path="/trip/:tripId">
                     <BookSeats />
+                </Route>
+                <Route exact path="/account/:accountId">
+                    <Account />
                 </Route>
             </Switch>
         </React.Fragment>

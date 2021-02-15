@@ -23,4 +23,39 @@ function setBookingSeats(trip) {
     }
 }
 
-export { getTrips, setNextTrips, setBookingSeats }
+function setAccount(account) {
+    return {
+        type: "SET_ACCOUNT",
+        payload: account
+    }
+}
+
+function setFirstName(name) {
+    return {
+        type: "SET_FIRSTNAME",
+        payload: name
+    }
+}
+
+function setLastName(name) {
+    return {
+        type: "SET_LASTNAME",
+        payload: name
+    }
+}
+
+function setPhoneNumber(number) {
+    return {
+        type: "SET_PHONE_NUMBER",
+        payload: number
+    }
+}
+
+function setBookings(obj) {
+    return {
+        type: "SET_BOOKINGS",
+        payload: obj
+    }
+}
+
+export { getTrips, setNextTrips, setBookingSeats, setAccount, setFirstName, setLastName, setPhoneNumber, setBookings }
