@@ -2,6 +2,7 @@ export default {
     trips: [],
     nextTrips: [],
     bookingSeats: {},
+    pickSeats: [], 
     account: {
         firstName: "Tojo",
         lastName: "Nomena",

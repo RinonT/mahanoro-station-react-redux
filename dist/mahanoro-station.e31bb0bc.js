@@ -38224,6 +38224,7 @@ var _default = {
   trips: [],
   nextTrips: [],
   bookingSeats: {},
+  pickSeats: [],
   account: {
     firstName: "Tojo",
     lastName: "Nomena",
@@ -38327,6 +38328,32 @@ function account(state = {}, action) {
       return state;
   }
 }
+},{}],"reducers/pickSeatsReducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.pickSeats = pickSeats;
+
+function pickSeats(state = [], action) {
+  switch (action.type) {
+    case "PICK_SEATS":
+      return [...state, action.payload];
+
+    case "SET_IS_SEAT_AVAILABLE":
+      return state.find(item => {
+        if (item.id == action.payload) {
+          return { ...state,
+            isAvailable: false
+          };
+        }
+      });
+
+    default:
+      return state;
+  }
+}
 },{}],"reducers/index.js":[function(require,module,exports) {
 "use strict";
 
@@ -38345,15 +38372,18 @@ var _bookingSeatsReducer = require("./bookingSeatsReducer");
 
 var _accountReducer = require("./accountReducer");
 
+var _pickSeatsReducer = require("./pickSeatsReducer");
+
 var _default = (0, _redux.combineReducers)({
   trips: _tripsReducer.trips,
   nextTrips: _nextTripsReducer.nextTrips,
   bookingSeats: _bookingSeatsReducer.bookingSeats,
+  pickSeats: _pickSeatsReducer.pickSeats,
   account: _accountReducer.account
 });
 
 exports.default = _default;
-},{"redux":"node_modules/redux/es/redux.js","./tripsReducer":"reducers/tripsReducer.js","./nextTripsReducer":"reducers/nextTripsReducer.js","./bookingSeatsReducer":"reducers/bookingSeatsReducer.js","./accountReducer":"reducers/accountReducer.js"}],"store.js":[function(require,module,exports) {
+},{"redux":"node_modules/redux/es/redux.js","./tripsReducer":"reducers/tripsReducer.js","./nextTripsReducer":"reducers/nextTripsReducer.js","./bookingSeatsReducer":"reducers/bookingSeatsReducer.js","./accountReducer":"reducers/accountReducer.js","./pickSeatsReducer":"reducers/pickSeatsReducer.js"}],"store.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38388,6 +38418,8 @@ exports.setFirstName = setFirstName;
 exports.setLastName = setLastName;
 exports.setPhoneNumber = setPhoneNumber;
 exports.setBookings = setBookings;
+exports.getSeats = getSeats;
+exports.SetIsSeatAvalable = SetIsSeatAvalable;
 
 function getTrips() {
   return async dispatch => {
@@ -38446,6 +38478,20 @@ function setBookings(obj) {
   return {
     type: "SET_BOOKINGS",
     payload: obj
+  };
+}
+
+function getSeats(seat) {
+  return {
+    type: "PICK_SEATS",
+    payload: seat
+  };
+}
+
+function SetIsSeatAvalable(seat) {
+  return {
+    type: "SET_IS_SEAT_AVAILABLE",
+    payload: seat
   };
 }
 },{}],"components/header/styles/header.js":[function(require,module,exports) {
@@ -38884,10 +38930,14 @@ BookingSeats.Subtitle = function BookingSeatsSubtitle({
 
 BookingSeats.Image = function BookingSeatsImage({
   src,
+  onClick,
+  id,
   restProps
 }) {
   return /*#__PURE__*/_react.default.createElement(_bookSeats.Image, _extends({
-    src: src
+    src: src,
+    onClick: onClick,
+    id: id
   }, restProps));
 };
 
@@ -39310,23 +39360,36 @@ function BookSeatsContainer() {
   } = (0, _reactRouter.useParams)();
   const nextTrips = (0, _reactRedux.useSelector)(state => state.nextTrips);
   const bookingSeat = (0, _reactRedux.useSelector)(state => state.bookingSeats);
+  const pickSeats = (0, _reactRedux.useSelector)(state => state.pickSeats);
   const dispatch = (0, _reactRedux.useDispatch)();
   const bookingSeatDetails = nextTrips.find(trip => trip.id == tripId);
   (0, _react.useEffect)(() => {
     dispatch((0, _actions.setBookingSeats)(bookingSeatDetails));
   }, [nextTrips]);
-  const bookingSeatObj = bookingSeat.trip;
+  const bookingSeatObj = bookingSeat.trip; // Allowing the user to pick seats
+
+  const chooseSeats = e => {
+    dispatch((0, _actions.SetIsSeatAvalable)(e.target.id));
+    const chosenSeats = bookingSeatObj.seats.find(seat => seat.id == e.target.id);
+    dispatch((0, _actions.getSeats)(chosenSeats));
+    console.log("faf");
+  };
+
+  console.log(pickSeats);
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, bookingSeatObj ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_components.Header.PageTitle, null, "Book a seat to", /*#__PURE__*/_react.default.createElement("span", null, bookingSeatObj.destination)), /*#__PURE__*/_react.default.createElement(_components.BookSeats, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Frame, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Subtitle, null, "Pick a seat"), bookingSeatObj.seats.map(seat => {
     return seat.isAvailable ? /*#__PURE__*/_react.default.createElement(_components.BookSeats.Image, {
       key: seat.id,
-      src: _reservedSeat.default,
-      alt: "Cars"
-    }) : /*#__PURE__*/_react.default.createElement(_components.BookSeats.Image, {
+      onClick: chooseSeats,
       key: seat.id,
+      id: seat.id,
+      src: true,
       src: _unreservedSeat.default,
       alt: "Cars"
+    }) : /*#__PURE__*/_react.default.createElement(_components.BookSeats.Image, {
+      src: _reservedSeat.default,
+      alt: "Cars"
     });
-  })), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Frame, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Subtitle, null, "Trip information:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Departure time:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.departureTime)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Driver:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.driverName)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Driver's contact:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.driverContact)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Estimated duration:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.estimatedDuration)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Breaks:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.breaks)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.BookingContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Price, null, bookingSeatObj.price, " Ar/seat"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.BookingButton, null, "Book 2 seats"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.TotalPrice, null, "40000ar"))))) : /*#__PURE__*/_react.default.createElement("p", null, "Loading..."));
+  })), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Frame, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Subtitle, null, "Trip information:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Departure time:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.departureTime)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Driver:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.driverName)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Driver's contact:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.driverContact)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Estimated duration:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.estimatedDuration)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Breaks:"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, bookingSeatObj.breaks)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.BookingContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Price, null, bookingSeatObj.price, " Ar/seat"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.BookingButton, null, "Book ", `${pickSeats.length < 2}` ? `${pickSeats.length}  seat` : `${pickSeats.length} seats`), /*#__PURE__*/_react.default.createElement(_components.BookSeats.TotalPrice, null, pickSeats.length > 1 ? bookingSeatObj.price * pickSeats.length : bookingSeatObj.price, " Ar"))))) : /*#__PURE__*/_react.default.createElement("p", null, "Loading..."));
 }
 },{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-redux":"node_modules/react-redux/es/index.js","../actions":"actions/index.js","../components":"components/index.js","../utils/reservedSeat.svg":"utils/reservedSeat.svg","../utils/unreservedSeat.svg":"utils/unreservedSeat.svg"}],"containers/account.js":[function(require,module,exports) {
 "use strict";

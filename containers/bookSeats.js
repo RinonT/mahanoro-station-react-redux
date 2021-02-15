@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { setBookingSeats } from '../actions';
+import { setBookingSeats, getSeats, SetIsSeatAvalable } from '../actions';
 import { Header, BookSeats } from '../components';
 import reservedSeat from '../utils/reservedSeat.svg';
 import unreservedSeat from '../utils/unreservedSeat.svg';
@@ -10,12 +10,24 @@ export default function BookSeatsContainer() {
     const { tripId } = useParams();
     const nextTrips = useSelector((state) => state.nextTrips);
     const bookingSeat = useSelector((state) => state.bookingSeats);
+    const pickSeats = useSelector((state) => state.pickSeats);
     const dispatch = useDispatch();
     const bookingSeatDetails = nextTrips.find((trip) => trip.id == tripId)
     useEffect(() => {
         dispatch(setBookingSeats(bookingSeatDetails))
     }, [nextTrips])
     const bookingSeatObj = bookingSeat.trip;
+
+    // Allowing the user to pick seats
+    const chooseSeats = (e) => {
+        dispatch(SetIsSeatAvalable(e.target.id))
+        const chosenSeats = bookingSeatObj.seats.find(seat => seat.id == e.target.id)
+        dispatch(getSeats(chosenSeats))
+        console.log("faf")
+    }
+
+    console.log(pickSeats)
+
     return (
         <React.Fragment>
             {
@@ -31,9 +43,9 @@ export default function BookSeatsContainer() {
                                 {
                                     bookingSeatObj.seats.map(seat => {
                                         return seat.isAvailable ?
-                                         <BookSeats.Image key={seat.id}  src={reservedSeat} alt="Cars" /> 
-                                        :
-                                        <BookSeats.Image key={seat.id} src={unreservedSeat} alt="Cars" /> 
+                                            <BookSeats.Image key={seat.id} onClick={chooseSeats} key={seat.id} id={seat.id} src src={unreservedSeat} alt="Cars" />
+                                            :
+                                            <BookSeats.Image src={reservedSeat}  alt="Cars" />
                                     })
                                 }
                             </BookSeats.Frame>
@@ -61,8 +73,8 @@ export default function BookSeatsContainer() {
                                 </BookSeats.InfoContainer>
                                 <BookSeats.BookingContainer>
                                     <BookSeats.Price>{bookingSeatObj.price} Ar/seat</BookSeats.Price>
-                                    <BookSeats.BookingButton>Book 2 seats</BookSeats.BookingButton>
-                                    <BookSeats.TotalPrice>40000ar</BookSeats.TotalPrice>
+                                    <BookSeats.BookingButton>Book {`${pickSeats.length < 2}` ? `${pickSeats.length}  seat` : `${pickSeats.length} seats`}</BookSeats.BookingButton>
+                                    <BookSeats.TotalPrice>{pickSeats.length > 1 ? bookingSeatObj.price * pickSeats.length : bookingSeatObj.price} Ar</BookSeats.TotalPrice>
                                 </BookSeats.BookingContainer>
                             </BookSeats.Frame>
                         </BookSeats>

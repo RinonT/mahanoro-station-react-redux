@@ -24,8 +24,8 @@ BookingSeats.Frame = function BookingSeats({children, restProps}) {
 BookingSeats.Subtitle = function BookingSeatsSubtitle({children, restProps}) {
     return <Subtitle {...restProps}>{children}</Subtitle>
 }
-BookingSeats.Image = function BookingSeatsImage({src, restProps}) {
-    return <Image src={src} {...restProps} /> 
+BookingSeats.Image = function BookingSeatsImage({src, onClick, id, restProps}) {
+    return <Image src={src} onClick={onClick} id={id} {...restProps} /> 
 }
 BookingSeats.InfoContainer = function BookingSeatsInfoContainer({children, restProps}) {
     return <InfoContainer {...restProps}>{children}</InfoContainer>
