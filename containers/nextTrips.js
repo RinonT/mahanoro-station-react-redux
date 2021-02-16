@@ -20,7 +20,14 @@ export default function NextTripsContainer() {
     const numberOfSeats = (arr) => {
         return arr.filter(seat => seat.isAvailable).length
     }
-
+ 
+    function getDates(timestamp) {
+        let date = new Date(timestamp).toLocaleDateString();
+        let dateFormated = date.replace(/(\d+)\/(\d+)\/(\d+)/g, "$2/0$1/$3");
+        return dateFormated;
+    }
+    // Formating date
+    let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     return (
         <React.Fragment>
             <Header.PageTitle>
@@ -35,11 +42,11 @@ export default function NextTripsContainer() {
                                 <NextTrips.Image src="" alt="taxi-brousse" />
                             </NextTrips.Frame>
                             <NextTrips.Frame>
-                                <NextTrips.Day>{trip.departureTime}</NextTrips.Day>
-                                <NextTrips.Time>{trip.departureTime}</NextTrips.Time>
+                                <NextTrips.Day>{weekdays[new Date(trip.departureTime).getDay()]}</NextTrips.Day>
+                                <NextTrips.Time>{`${new Date(trip.departureTime).getHours()}:${new Date(trip.departureTime).getMinutes() < 10 ? "0" + new Date(trip.departureTime).getMinutes() : new Date(trip.departureTime).getMinutes()}`}</NextTrips.Time>
                             </NextTrips.Frame>
                             <NextTrips.Frame>
-                                <NextTrips.Date>{trip.departureTime}</NextTrips.Date>
+                                <NextTrips.Date>{getDates(trip.departureTime)}</NextTrips.Date>
                                 <NextTrips.SeatsInfo>
                                      { numberOfSeats(trip.seats) < 2 ? `${numberOfSeats(trip.seats)} seat` : `${numberOfSeats(trip.seats)} seats`} left
                                 </NextTrips.SeatsInfo>

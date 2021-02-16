@@ -1,7 +1,7 @@
 export default {
     trips: [],
     nextTrips: [],
-    bookingSeats: {},
+    bookingSeats: [],
     pickSeats: [], 
     showModal: false,
     account: {

@@ -65,6 +65,14 @@ function getSeats(seat) {
     }
 }
 
+function  isSeatAvailable(seatId) {
+    return {
+        type: "IS_SEAT_AVAILABLE",
+        payload: seatId,
+        picked: false
+    }
+}
+
 function showModal(isModalDisplayed) {
     return {
         type: "SHOW_MODAL",
@@ -72,4 +80,4 @@ function showModal(isModalDisplayed) {
     }
 }
 
-export { getTrips, setNextTrips, setBookingSeats, setAccount, setFirstName, setLastName, setPhoneNumber, setBookings, getSeats, showModal }
+export { getTrips, setNextTrips, setBookingSeats, setAccount, setFirstName, setLastName, setPhoneNumber, setBookings, getSeats, showModal, isSeatAvailable }
