@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { setBookingSeats, getSeats, SetIsSeatAvalable } from '../actions';
+import { setBookingSeats, getSeats } from '../actions';
 import { Header, BookSeats } from '../components';
 import reservedSeat from '../utils/reservedSeat.svg';
 import unreservedSeat from '../utils/unreservedSeat.svg';
+import pickedSeat from '../utils/pickedSeat.svg';
+
 
 export default function BookSeatsContainer() {
     const { tripId } = useParams();
@@ -16,18 +18,17 @@ export default function BookSeatsContainer() {
     useEffect(() => {
         dispatch(setBookingSeats(bookingSeatDetails))
     }, [nextTrips])
+    
     const bookingSeatObj = bookingSeat.trip;
 
     // Allowing the user to pick seats
-    const chooseSeats = (e) => {
-        dispatch(SetIsSeatAvalable(e.target.id))
-        const chosenSeats = bookingSeatObj.seats.find(seat => seat.id == e.target.id)
-        dispatch(getSeats(chosenSeats))
-        console.log("faf")
+    const chooseSeats = (e) => { 
+        const chosenSeats = bookingSeatObj.seats.find(seat => seat.id == e.target.id);
+        chosenSeats.isAvailable = false;
+        chosenSeats.passengerFirstName = true;
+        dispatch(getSeats(chosenSeats)) 
     }
-
-    console.log(pickSeats)
-
+ 
     return (
         <React.Fragment>
             {
@@ -42,10 +43,12 @@ export default function BookSeatsContainer() {
                                 <BookSeats.Subtitle>Pick a seat</BookSeats.Subtitle>
                                 {
                                     bookingSeatObj.seats.map(seat => {
-                                        return seat.isAvailable ?
-                                            <BookSeats.Image key={seat.id} onClick={chooseSeats} key={seat.id} id={seat.id} src src={unreservedSeat} alt="Cars" />
-                                            :
-                                            <BookSeats.Image src={reservedSeat}  alt="Cars" />
+                                        return seat.isAvailable && seat.passengerFirstName === "" ?
+                                            <BookSeats.Image key={seat.id} onClick={chooseSeats} id={seat.id} src src={unreservedSeat} alt="Cars" />
+                                            : !seat.isAvailable && seat.passengerFirstName === "" ?
+                                            <BookSeats.Image  key={seat.id}  src={reservedSeat}  alt="Cars" /> 
+                                            :  
+                                            <BookSeats.Image onClick={chooseSeats} key={seat.id}  src={pickedSeat}  alt="Cars" /> 
                                     })
                                 }
                             </BookSeats.Frame>

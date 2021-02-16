@@ -64,12 +64,6 @@ function getSeats(seat) {
         payload: seat
     }
 }
+ 
 
-function SetIsSeatAvalable(seat) {
-    return {
-        type: "SET_IS_SEAT_AVAILABLE",
-        payload: seat
-    }
-}
-
-export { getTrips, setNextTrips, setBookingSeats, setAccount, setFirstName, setLastName, setPhoneNumber, setBookings, getSeats, SetIsSeatAvalable }
+export { getTrips, setNextTrips, setBookingSeats, setAccount, setFirstName, setLastName, setPhoneNumber, setBookings, getSeats }
