@@ -3,6 +3,7 @@ export default {
     nextTrips: [],
     bookingSeats: {},
     pickSeats: [], 
+    showModal: false,
     account: {
         firstName: "Tojo",
         lastName: "Nomena",

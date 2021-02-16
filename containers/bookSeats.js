@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { setBookingSeats, getSeats } from '../actions';
+import { setBookingSeats, getSeats, showModal } from '../actions';
 import { Header, BookSeats } from '../components';
+import ModalContainer from './modal';
 import reservedSeat from '../utils/reservedSeat.svg';
 import unreservedSeat from '../utils/unreservedSeat.svg';
 import pickedSeat from '../utils/pickedSeat.svg';
@@ -13,22 +14,26 @@ export default function BookSeatsContainer() {
     const nextTrips = useSelector((state) => state.nextTrips);
     const bookingSeat = useSelector((state) => state.bookingSeats);
     const pickSeats = useSelector((state) => state.pickSeats);
+    const isModalDisplayed = useSelector((state) => state.showModal);
     const dispatch = useDispatch();
     const bookingSeatDetails = nextTrips.find((trip) => trip.id == tripId)
+
     useEffect(() => {
         dispatch(setBookingSeats(bookingSeatDetails))
-    }, [nextTrips])
-    
+    }, [nextTrips]);
+
+    console.log(isModalDisplayed);
+
     const bookingSeatObj = bookingSeat.trip;
 
     // Allowing the user to pick seats
-    const chooseSeats = (e) => { 
+    const chooseSeats = (e) => {
         const chosenSeats = bookingSeatObj.seats.find(seat => seat.id == e.target.id);
         chosenSeats.isAvailable = false;
         chosenSeats.passengerFirstName = true;
-        dispatch(getSeats(chosenSeats)) 
+        dispatch(getSeats(chosenSeats))
     }
- 
+
     return (
         <React.Fragment>
             {
@@ -46,9 +51,9 @@ export default function BookSeatsContainer() {
                                         return seat.isAvailable && seat.passengerFirstName === "" ?
                                             <BookSeats.Image key={seat.id} onClick={chooseSeats} id={seat.id} src src={unreservedSeat} alt="Cars" />
                                             : !seat.isAvailable && seat.passengerFirstName === "" ?
-                                            <BookSeats.Image  key={seat.id}  src={reservedSeat}  alt="Cars" /> 
-                                            :  
-                                            <BookSeats.Image onClick={chooseSeats} key={seat.id}  src={pickedSeat}  alt="Cars" /> 
+                                                <BookSeats.Image key={seat.id} src={reservedSeat} alt="Cars" />
+                                                :
+                                                <BookSeats.Image onClick={chooseSeats} key={seat.id} src={pickedSeat} alt="Cars" />
                                     })
                                 }
                             </BookSeats.Frame>
@@ -76,11 +81,14 @@ export default function BookSeatsContainer() {
                                 </BookSeats.InfoContainer>
                                 <BookSeats.BookingContainer>
                                     <BookSeats.Price>{bookingSeatObj.price} Ar/seat</BookSeats.Price>
-                                    <BookSeats.BookingButton>Book {`${pickSeats.length < 2}` ? `${pickSeats.length}  seat` : `${pickSeats.length} seats`}</BookSeats.BookingButton>
+                                    <BookSeats.BookingButton onClick={(e) => dispatch(showModal(true))}>Book {`${pickSeats.length < 2}` ? `${pickSeats.length}  seat` : `${pickSeats.length} seats`}</BookSeats.BookingButton>
                                     <BookSeats.TotalPrice>{pickSeats.length > 1 ? bookingSeatObj.price * pickSeats.length : bookingSeatObj.price} Ar</BookSeats.TotalPrice>
                                 </BookSeats.BookingContainer>
                             </BookSeats.Frame>
                         </BookSeats>
+                        {
+                            isModalDisplayed && <ModalContainer exitModal={() => dispatch(showModal(false))} />
+                        }
                     </React.Fragment>
                     : <p>Loading...</p>
             }

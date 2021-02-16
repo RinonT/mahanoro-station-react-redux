@@ -4,6 +4,8 @@ import { nextTrips } from './nextTripsReducer';
 import {  bookingSeats } from './bookingSeatsReducer';
 import {  account } from './accountReducer';
 import {  pickSeats } from './pickSeatsReducer';
+import {  showModal } from './showModalReducer';
+
 
 
 export default combineReducers({
@@ -11,5 +13,6 @@ export default combineReducers({
    nextTrips,
    bookingSeats,
    pickSeats,
+   showModal,
    account
 })

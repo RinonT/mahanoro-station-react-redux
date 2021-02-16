@@ -39,8 +39,8 @@ BookingSeats.BookingContainer = function BookingSeatsBookingContainer({children,
 BookingSeats.Price = function BookingSeatsPrice({children, restProps}) {
     return <Price {...restProps}>{children}</Price>
 }
-BookingSeats.BookingButton = function BookingSeatsBookingButton({children, restProps}) {
-    return <BookingButton {...restProps}>{children}</BookingButton>
+BookingSeats.BookingButton = function BookingSeatsBookingButton({onClick, children, restProps}) {
+    return <BookingButton onClick={onClick} {...restProps}>{children}</BookingButton>
 }
 BookingSeats.TotalPrice = function BookingSeatsTotalPrice({children, restProps}) {
     return <TotalPrice {...restProps}>{children}</TotalPrice>

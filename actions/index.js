@@ -64,6 +64,12 @@ function getSeats(seat) {
         payload: seat
     }
 }
- 
 
-export { getTrips, setNextTrips, setBookingSeats, setAccount, setFirstName, setLastName, setPhoneNumber, setBookings, getSeats }
+function showModal(isModalDisplayed) {
+    return {
+        type: "SHOW_MODAL",
+        payload: isModalDisplayed
+    }
+}
+
+export { getTrips, setNextTrips, setBookingSeats, setAccount, setFirstName, setLastName, setPhoneNumber, setBookings, getSeats, showModal }
