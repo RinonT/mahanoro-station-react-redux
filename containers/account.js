@@ -3,10 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setAccount, setFirstName, setLastName, setPhoneNumber } from '../actions';
 import { Header, Account } from '../components';
 import taxiBrousseImg from '../utils/taxi-brousse.svg';
+import userPhoto from '../utils/user-photo.svg';
+
 
 export default function AccountContainer() {
     const account = useSelector(state => state.account);
     const dispatch = useDispatch();
+    
     const updatedAccount = {
         firstName: account.firstName,
         lastName: account.lastName,
@@ -20,10 +23,13 @@ export default function AccountContainer() {
     }
     return (
         <React.Fragment>
+            <Account.HeadingContainer>
+                <Account.Image src={userPhoto} alt="user photo"/>
             <Header.PageTitle>
-                My account
-                <span>{account.firstName} {account.lastName}</span>
+                My account 
+                <Header.Span>{account.firstName} {account.lastName}</Header.Span>
             </Header.PageTitle>
+            </Account.HeadingContainer>
             <Account>
                 <Account.Frame>
                     <Account.Subtitle>My personal information</Account.Subtitle>

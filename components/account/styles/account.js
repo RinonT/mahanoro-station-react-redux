@@ -1,10 +1,29 @@
 import styled from 'styled-components';
  
 const Container = styled.div`
+    max-width: 1114px;
+    margin-left: auto;
+    margin-right: auto;
     display: grid;
+    justify-content: center;
+    padding-left: 16px;
+    padding-right: 16px;
+
     @media(min-width: 1114px) {
         grid-template-columns: 35% auto;
         column-gap: 76px;
+        justify-content: unset;
+    }
+`;
+const HeadingContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    img {
+        width: 134px;
+        height: 134px;
+        margin-top: 60px;
+        margin-right: 80px;
     }
 `;
 const Frame = styled.div``;
@@ -43,6 +62,7 @@ const Button = styled.button`
     line-height: 28px;
     background: #E53170;
     color: #FFFFFF;
+    margin-top: 42px;
     padding-top: 28px;
     padding-bottom: 28px; 
     padding-left: 32px;
@@ -84,6 +104,7 @@ const CancelButton = styled.button`
 
 export {
     Container,
+    HeadingContainer,
     Frame,
     Subtitle,
     Form,

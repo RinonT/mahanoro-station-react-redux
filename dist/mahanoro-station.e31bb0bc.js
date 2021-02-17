@@ -39140,20 +39140,40 @@ BookingSeats.TotalPrice = function BookingSeatsTotalPrice({
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CancelButton = exports.Span = exports.Image = exports.Group = exports.GroupContainer = exports.Button = exports.Input = exports.Label = exports.Form = exports.Subtitle = exports.Frame = exports.Container = void 0;
+exports.CancelButton = exports.Span = exports.Image = exports.Group = exports.GroupContainer = exports.Button = exports.Input = exports.Label = exports.Form = exports.Subtitle = exports.Frame = exports.HeadingContainer = exports.Container = void 0;
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const Container = _styledComponents.default.div`
+    max-width: 1114px;
+    margin-left: auto;
+    margin-right: auto;
     display: grid;
+    justify-content: center;
+    padding-left: 16px;
+    padding-right: 16px;
+
     @media(min-width: 1114px) {
         grid-template-columns: 35% auto;
         column-gap: 76px;
+        justify-content: unset;
     }
 `;
 exports.Container = Container;
+const HeadingContainer = _styledComponents.default.div`
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    img {
+        width: 134px;
+        height: 134px;
+        margin-top: 60px;
+        margin-right: 80px;
+    }
+`;
+exports.HeadingContainer = HeadingContainer;
 const Frame = _styledComponents.default.div``;
 exports.Frame = Frame;
 const Subtitle = _styledComponents.default.h2`
@@ -39193,6 +39213,7 @@ const Button = _styledComponents.default.button`
     line-height: 28px;
     background: #E53170;
     color: #FFFFFF;
+    margin-top: 42px;
     padding-top: 28px;
     padding-bottom: 28px; 
     padding-left: 32px;
@@ -39257,6 +39278,13 @@ function Account({
 }) {
   return /*#__PURE__*/_react.default.createElement(_account.Container, restProps, children);
 }
+
+Account.HeadingContainer = function AccountHeadingContainer({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_account.HeadingContainer, restProps, children);
+};
 
 Account.Frame = function AccountFrame({
   children,
@@ -39857,7 +39885,9 @@ function BookSeatsContainer() {
     }));
   }) : /*#__PURE__*/_react.default.createElement("p", null, "Loading..."));
 }
-},{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-redux":"node_modules/react-redux/es/index.js","../actions":"actions/index.js","../components":"components/index.js","./modal":"containers/modal.js","../utils/reservedSeat.svg":"utils/reservedSeat.svg","../utils/unreservedSeat.svg":"utils/unreservedSeat.svg","../utils/pickedSeat.svg":"utils/pickedSeat.svg","../utils/taxi-brousse.svg":"utils/taxi-brousse.svg"}],"containers/account.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router":"node_modules/react-router/esm/react-router.js","react-redux":"node_modules/react-redux/es/index.js","../actions":"actions/index.js","../components":"components/index.js","./modal":"containers/modal.js","../utils/reservedSeat.svg":"utils/reservedSeat.svg","../utils/unreservedSeat.svg":"utils/unreservedSeat.svg","../utils/pickedSeat.svg":"utils/pickedSeat.svg","../utils/taxi-brousse.svg":"utils/taxi-brousse.svg"}],"utils/user-photo.svg":[function(require,module,exports) {
+module.exports = "/user-photo.410bcbb6.svg";
+},{}],"containers/account.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -39874,6 +39904,8 @@ var _actions = require("../actions");
 var _components = require("../components");
 
 var _taxiBrousse = _interopRequireDefault(require("../utils/taxi-brousse.svg"));
+
+var _userPhoto = _interopRequireDefault(require("../utils/user-photo.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -39892,7 +39924,10 @@ function AccountContainer() {
     dispatch((0, _actions.setAccount)(updatedAccount));
   };
 
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_components.Header.PageTitle, null, "My account", /*#__PURE__*/_react.default.createElement("span", null, account.firstName, " ", account.lastName)), /*#__PURE__*/_react.default.createElement(_components.Account, null, /*#__PURE__*/_react.default.createElement(_components.Account.Frame, null, /*#__PURE__*/_react.default.createElement(_components.Account.Subtitle, null, "My personal information"), /*#__PURE__*/_react.default.createElement(_components.Account.Form, {
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_components.Account.HeadingContainer, null, /*#__PURE__*/_react.default.createElement(_components.Account.Image, {
+    src: _userPhoto.default,
+    alt: "user photo"
+  }), /*#__PURE__*/_react.default.createElement(_components.Header.PageTitle, null, "My account", /*#__PURE__*/_react.default.createElement(_components.Header.Span, null, account.firstName, " ", account.lastName))), /*#__PURE__*/_react.default.createElement(_components.Account, null, /*#__PURE__*/_react.default.createElement(_components.Account.Frame, null, /*#__PURE__*/_react.default.createElement(_components.Account.Subtitle, null, "My personal information"), /*#__PURE__*/_react.default.createElement(_components.Account.Form, {
     onSubmit: updatingAccount
   }, /*#__PURE__*/_react.default.createElement(_components.Account.Label, null, "Fist name"), /*#__PURE__*/_react.default.createElement(_components.Account.Input, {
     value: account.firstName,
@@ -39911,7 +39946,7 @@ function AccountContainer() {
     })), /*#__PURE__*/_react.default.createElement(_components.Account.Group, null, /*#__PURE__*/_react.default.createElement(_components.Account.Span, null, booking.destination), /*#__PURE__*/_react.default.createElement(_components.Account.Span, null, booking.departureTime)), /*#__PURE__*/_react.default.createElement(_components.Account.Group, null, /*#__PURE__*/_react.default.createElement(_components.Account.Span, null, " ", `${booking.numberOfSeats === 1}` ? `${booking.numberOfSeats}  seat` : `${booking.numberOfSeats} seats`, " "), /*#__PURE__*/_react.default.createElement(_components.Account.Span, null, booking.price, " Ar")), /*#__PURE__*/_react.default.createElement(_components.Account.Group, null, /*#__PURE__*/_react.default.createElement(_components.Account.CancelButton, null, "Cancel")));
   }))));
 }
-},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../actions":"actions/index.js","../components":"components/index.js","../utils/taxi-brousse.svg":"utils/taxi-brousse.svg"}],"containers/index.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../actions":"actions/index.js","../components":"components/index.js","../utils/taxi-brousse.svg":"utils/taxi-brousse.svg","../utils/user-photo.svg":"utils/user-photo.svg"}],"containers/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

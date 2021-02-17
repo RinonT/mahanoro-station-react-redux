@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     Container,
+    HeadingContainer,
     Frame,
     Subtitle,
     Form,
@@ -17,7 +18,9 @@ import {
 export default function Account({children, restProps}) {
     return <Container {...restProps}>{children}</Container>
 }
-
+Account.HeadingContainer = function AccountHeadingContainer({children, restProps}) {
+    return <HeadingContainer {...restProps}>{children}</HeadingContainer>
+}
 Account.Frame = function AccountFrame({children, restProps}) {
     return <Frame {...restProps}>{children}</Frame>
 }
