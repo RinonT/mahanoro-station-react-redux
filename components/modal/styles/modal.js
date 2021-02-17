@@ -16,6 +16,7 @@ const OuterModal = styled.div`
 `;
 
 const InnerModal = styled.div`
+    position: relative;
     display: grid;
     width: 65%;
     background: #FFFFFF;
@@ -32,15 +33,22 @@ const CancelButton = styled.button`
     border: none;
     outline: none;
     padding-top: 48px;
+    position: absolute;
+    top: -44px; 
+    right: 16px;
 `;
 
 const HeadingContainer = styled.div`
     display: flex;
+    flex-wrap: wrap;
+    margin-top: 32px;
 `;
 
 const Icon = styled.img`
-    width: 71px;
-    height: 71px;
+    align-self: center;
+    width: 50px; 
+    margin-top: 8px;
+    margin-right: 16px;
 `;
 
 const Heading = styled.h2`
@@ -62,7 +70,9 @@ const Text = styled.p`
 `;
 
 const Button = styled.button`
-    ${Text}
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
     background-color: #E53170;
     color: #FFFFFF;
     padding: 27px;

@@ -3,8 +3,14 @@ import styled from 'styled-components';
 const Container = styled.div`
         display: grid;
         justify-content: center;
+        
 
     @media(min-width: 1114px){
+        max-width: 1114px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-right: 16px;
+        padding-left: 16px;
         display: flex;
         justify-content: space-between;
     }
@@ -12,7 +18,8 @@ const Container = styled.div`
 
 const Frame = styled.div``;
 const Image = styled.img`
-    max-width: 100%;
+    width: 93px;
+    height: 93px;
 `;
 const Day = styled.span`
     font-weight: normal;

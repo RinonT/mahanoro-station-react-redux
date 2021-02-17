@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setAccount, setFirstName, setLastName, setPhoneNumber, setBookings } from '../actions';
+import { setAccount, setFirstName, setLastName, setPhoneNumber } from '../actions';
 import { Header, Account } from '../components';
+import taxiBrousseImg from '../utils/taxi-brousse.svg';
 
 export default function AccountContainer() {
     const account = useSelector(state => state.account);
@@ -10,9 +11,13 @@ export default function AccountContainer() {
         firstName: account.firstName,
         lastName: account.lastName,
         phoneNumber: account.phoneNumber,
-        bookings: account.bookings
+        myBookings: account.myBookings
     }
-
+  
+    const updatingAccount = (e) => {
+        e.preventDefault();
+        dispatch(setAccount(updatedAccount))
+    }
     return (
         <React.Fragment>
             <Header.PageTitle>
@@ -22,10 +27,7 @@ export default function AccountContainer() {
             <Account>
                 <Account.Frame>
                     <Account.Subtitle>My personal information</Account.Subtitle>
-                    <Account.Form onSubmit={(e) => {
-                        e.preventDefault();
-                        setAccount(updatedAccount)
-                    }}>
+                    <Account.Form onSubmit={updatingAccount}>
                         <Account.Label>Fist name</Account.Label>
                         <Account.Input value={account.firstName} onChange={(e) => dispatch(setFirstName(e.target.value))} />
                         <Account.Label>Last name</Account.Label>
@@ -40,25 +42,23 @@ export default function AccountContainer() {
                 <Account.Frame>
                     <Account.Subtitle>My account</Account.Subtitle>
                     {
-                        account.bookings?.map(booking => {
-                            return (
-                                <Account.GroupContainer>
-                                    <Account.Group>
-                                        <Account.Image src="jjk" alt="A photo of a car" />
-                                    </Account.Group>
-                                    <Account.Group>
-                                        <Account.Span>{booking.destination}</Account.Span>
-                                        <Account.Span>{booking.departureTime}</Account.Span>
-                                    </Account.Group>
-                                    <Account.Group>
-                                        <Account.Span>{`${booking.numberOfSeats > 1} ? ${booking.numberOfSeats} seats : ${booking.numberOfSeats} seat`}</Account.Span>
-                                        <Account.Span>{booking.price} Ar</Account.Span>
-                                    </Account.Group>
-                                    <Account.Group>
-                                        <Account.CancelButton>Cancel</Account.CancelButton>
-                                    </Account.Group>
-                                </Account.GroupContainer>
-                            )
+                        account.myBookings.map(booking => {
+                            return <Account.GroupContainer>
+                                <Account.Group>
+                                    <Account.Image src={taxiBrousseImg} alt="A photo of a car" />
+                                </Account.Group>
+                                <Account.Group>
+                                    <Account.Span>{booking.destination}</Account.Span>
+                                    <Account.Span>{booking.departureTime}</Account.Span>
+                                </Account.Group>
+                                <Account.Group>
+                                    <Account.Span> {`${booking.numberOfSeats === 1}` ? `${booking.numberOfSeats}  seat` : `${booking.numberOfSeats} seats`} </Account.Span>
+                                    <Account.Span>{booking.price} Ar</Account.Span>
+                                </Account.Group>
+                                <Account.Group>
+                                    <Account.CancelButton>Cancel</Account.CancelButton>
+                                </Account.Group>
+                            </Account.GroupContainer>
                         })
                     }
                 </Account.Frame>

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getTrips } from '../actions';
 import { Trips } from '../components';
+import thumbsUpIcon from '../utils/thumbs-up.svg';
 
 
 
@@ -24,6 +25,7 @@ export default function HomeContainer() {
     const cityNamesEl = trips !== [] && removeDuplicatedCityNames.map(destination => {
         return (
             <Trips.CityNameContainer key={destination}>
+                <Trips.Icon src={thumbsUpIcon} alt="thumbs up icon"/>
                 <Link to={`/city/${destination}`}>
                     <Trips.CityName>{destination}</Trips.CityName>
                 </Link>

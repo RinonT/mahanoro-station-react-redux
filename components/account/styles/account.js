@@ -54,14 +54,24 @@ const GroupContainer = styled.div`
     justify-content: space-between;
 `
 const Group = styled.div``;
-const Image = styled.img``;
+const Image = styled.img`
+    width: 65px;
+    height: 65px;
+`;
+
 const Span = styled.span`
-    ${Input}
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
     padding: 0;
     color: #000000;
 `;
 const CancelButton = styled.button`
-    ${Button};
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    background: #E53170;
+    color: #FFFFFF;
     background: #FF8906;
     letter-spacing: 0.05em;
     text-transform: uppercase;

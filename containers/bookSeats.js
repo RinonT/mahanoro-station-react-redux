@@ -6,7 +6,8 @@ import { Header, BookSeats } from '../components';
 import ModalContainer from './modal';
 import reservedSeat from '../utils/reservedSeat.svg';
 import unreservedSeat from '../utils/unreservedSeat.svg';
-import pickedSeat from '../utils/pickedSeat.svg';
+import pickedSeatSvg from '../utils/pickedSeat.svg';
+import taxiBrousseIcon from '../utils/taxi-brousse.svg';
 
 
 export default function BookSeatsContainer() {
@@ -22,8 +23,6 @@ export default function BookSeatsContainer() {
         dispatch(setBookingSeats(bookingSeatDetails))
     }, [nextTrips]);
 
-    // const bookingSeatObj = bookingSeat;
-
     // Allowing the user to pick seats
     const chooseSeats = (e) => {
         const chosenSeats = bookingSeat[0].seats.find(seat => seat.id == e.target.id);
@@ -36,62 +35,70 @@ export default function BookSeatsContainer() {
         let dateFormated = date.replace(/(\d+)\/(\d+)\/(\d+)/g, "$2/0$1/$3");
         return dateFormated;
     }
+
+  console.log(bookingSeat)
     return (
         <React.Fragment>
             {
-                bookingSeat !== [] ? bookingSeat.map(seat => {
-                    return <React.Fragment key={seat.id}>
-                        <Header.PageTitle>
-                            Book a seat to
-                            <span>{seat.destination}</span>
-                        </Header.PageTitle>
+          bookingSeat !== [] ?  bookingSeat.map(seat => {
+                    return <React.Fragment key={seat?.id}>
+                        <Header.PageTitleContainer>
+                            <BookSeats.Image src={taxiBrousseIcon} alt="A taxi image" />
+                            <Header.PageTitle>
+                                Book a set to 
+                            <Header.Span>{seat?.destination}</Header.Span>
+                            </Header.PageTitle>
+                        </Header.PageTitleContainer>
                         <BookSeats>
                             <BookSeats.Frame>
                                 <BookSeats.Subtitle>Pick a seat</BookSeats.Subtitle>
                                 {
-                                    seat.seats.map(seat => {
-                                        return seat.isAvailable && !seat.picked || seat.isAvailable && seat.picked ?
-                                            <BookSeats.Image key={seat.id} onClick={(e) => {
+                                    seat?.seats.map(seat => {
+                                        return seat?.isAvailable && !seat?.picked || seat?.isAvailable && seat?.picked ?
+                                            <BookSeats.Image key={seat?.id} onClick={(e) => {
                                                 chooseSeats(e);
-                                            }} id={seat.id} src src={unreservedSeat} alt="Cars" />
-                                            : seat.isAvailable == false && seat.picked ?
-                                                <BookSeats.Image onClick={chooseSeats} key={seat.id} src={pickedSeat} alt="Cars" />
+                                            }} id={seat?.id} src src={unreservedSeat} alt="Cars" />
+                                            : seat?.isAvailable == false && seat?.picked ?
+                                                <BookSeats.Image onClick={chooseSeats} key={seat?.id} src={pickedSeatSvg} id={seat?.id} alt="Cars" />
                                                 :
-                                                <BookSeats.Image key={seat.id} src={reservedSeat} alt="Cars" />
+                                                <BookSeats.Image key={seat?.id} src={reservedSeat} alt="Cars" />
                                     })
                                 }
                             </BookSeats.Frame>
                             <BookSeats.Frame>
-                                <BookSeats.Subtitle>Trip information:</BookSeats.Subtitle>
+                                <BookSeats.Subtitle>Trip information: </BookSeats.Subtitle>
                                 <BookSeats.InfoContainer>
-                                    <BookSeats.Info>Departure time:</BookSeats.Info>
-                                    <BookSeats.Info>{`${`${new Date(seat.departureTime).getHours()}:${new Date(seat.departureTime).getMinutes() < 10 ? "0" + new Date(seat.departureTime).getMinutes() : new Date(seat.departureTime).getMinutes()}`}, ${getDates(seat.departureTime)}`}</BookSeats.Info>
+                                    <BookSeats.Info>Departure time: </BookSeats.Info>
+                                    <BookSeats.Info>{`${`${new Date(seat?.departureTime).getHours()}:${new Date(seat?.departureTime).getMinutes() < 10 ? "0" + new Date(seat?.departureTime).getMinutes() : new Date(seat?.departureTime).getMinutes()}`}, ${getDates(seat?.departureTime)}`}</BookSeats.Info>
                                 </BookSeats.InfoContainer>
                                 <BookSeats.InfoContainer>
-                                    <BookSeats.Info>Driver:</BookSeats.Info>
-                                    <BookSeats.Info>{seat.driverName}</BookSeats.Info>
+                                    <BookSeats.Info>Driver: </BookSeats.Info>
+                                    <BookSeats.Info>{seat?.driverName}</BookSeats.Info>
                                 </BookSeats.InfoContainer>
                                 <BookSeats.InfoContainer>
-                                    <BookSeats.Info>Driver's contact:</BookSeats.Info>
-                                    <BookSeats.Info>{seat.driverContact}</BookSeats.Info>
+                                    <BookSeats.Info>Driver's contact: </BookSeats.Info>
+                                    <BookSeats.Info>{seat?.driverContact}</BookSeats.Info>
                                 </BookSeats.InfoContainer>
                                 <BookSeats.InfoContainer>
-                                    <BookSeats.Info>Estimated duration:</BookSeats.Info>
-                                    <BookSeats.Info>{seat.estimatedDuration}</BookSeats.Info>
+                                    <BookSeats.Info>Estimated duration: </BookSeats.Info>
+                                    <BookSeats.Info>{seat?.estimatedDuration}</BookSeats.Info>
                                 </BookSeats.InfoContainer>
                                 <BookSeats.InfoContainer>
-                                    <BookSeats.Info>Breaks:</BookSeats.Info>
-                                    <BookSeats.Info>{seat.breaks}</BookSeats.Info>
+                                    <BookSeats.Info>Breaks: </BookSeats.Info>
+                                    <BookSeats.Info>{seat?.breaks}</BookSeats.Info>
                                 </BookSeats.InfoContainer>
                                 <BookSeats.BookingContainer>
-                                    <BookSeats.Price>{seat.price} Ar/seat</BookSeats.Price>
-                                    <BookSeats.BookingButton onClick={(e) => dispatch(showModal(true))}>Book {`${pickSeats.length < 2}` ? `${pickSeats.length}  seat` : `${pickSeats.length} seats`}</BookSeats.BookingButton>
-                                    <BookSeats.TotalPrice>{pickSeats.length > 1 ? seat.price * pickSeats.length : seat.price} Ar</BookSeats.TotalPrice>
+                                    <BookSeats.Price>{seat?.price} Ar/seat</BookSeats.Price>
+                                    <BookSeats.BookingButton onClick={() => dispatch(showModal(true))}>Book {`${pickSeats.length < 2}` ? `${pickSeats.length}  seat` : `${pickSeats.length} seats`}</BookSeats.BookingButton>
+                                    <BookSeats.TotalPrice>{pickSeats.length > 1 ? seat?.price * pickSeats.length : seat?.price} Ar</BookSeats.TotalPrice>
                                 </BookSeats.BookingContainer>
                             </BookSeats.Frame>
                         </BookSeats>
                         {
-                            isModalDisplayed && <ModalContainer exitModal={() => dispatch(showModal(false))} />
+                            isModalDisplayed && <ModalContainer exitModal={() => dispatch(showModal(false))} destination={seat.destination}
+                            departureTime={`${`${new Date(seat?.departureTime).getHours()}:${new Date(seat?.departureTime).getMinutes() < 10 ? "0" + new Date(seat?.departureTime).getMinutes() : new Date(seat?.departureTime).getMinutes()}`}, ${getDates(seat?.departureTime)}`}
+                            numberOfSeats={pickSeats.length}
+                            price={pickSeats.length > 1 ? seat?.price * pickSeats.length : seat?.price}  />
                         }
                     </React.Fragment>
                 })

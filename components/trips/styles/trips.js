@@ -11,10 +11,18 @@ const Container = styled.div`
 `;
 
 const CityNameContainer = styled.div`
+    display: flex;
     background-color: #000000;
     margin-bottom: 32px;
     padding-left: 32px;
     padding-right: 32px;
+`;
+
+const Icon = styled.img`
+    width: 34px;
+    height: 36px;
+    margin-top: 32px;
+    margin-right: 31px;
 `;
 
 const CityName = styled.p`
@@ -28,4 +36,4 @@ const CityName = styled.p`
     color: #FFFFFF;
 `;
 
-export { Container, CityNameContainer, CityName } 
+export { Container, CityNameContainer, Icon, CityName } 

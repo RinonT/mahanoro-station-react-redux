@@ -7,7 +7,9 @@ export const GlobalStyles = createGlobalStyle`
         font-weight: normal;
         margin: 0;
         padding: 0;
-
+        button {
+            cursor: pointer;
+        }
         a {
             text-decoration: none;
         }

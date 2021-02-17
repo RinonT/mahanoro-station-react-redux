@@ -24,8 +24,8 @@ Account.Frame = function AccountFrame({children, restProps}) {
 Account.Subtitle = function AccountSubtitle({children, restProps}) {
     return <Subtitle {...restProps}>{children}</Subtitle>
 }
-Account.Form = function Account({children, restProps}) {
-    return <Form {...restProps}>{children}</Form>
+Account.Form = function Account({onSubmit, children, restProps}) {
+    return <Form onSubmit={onSubmit} {...restProps}>{children}</Form>
 }
 Account.Label = function AccountLabel({children, restProps}) {
     return <Label {...restProps}>{children}</Label>

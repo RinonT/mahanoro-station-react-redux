@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+    max-width: 1114px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 32px;
+    padding-right: 32px;
     display: grid;
 
     @media(min-width: 1114px) {

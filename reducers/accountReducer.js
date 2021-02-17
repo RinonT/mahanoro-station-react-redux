@@ -18,11 +18,11 @@ function account(state = {}, action) {
                 ...state,
                 phoneNumber: action.payload
             };
-            case "SET_BOOKINGS":
-                return {
-                    ...state,
-                    bookings: [...state.bookings, action.payload]
-                };
+        case "SET_BOOKINGS":
+            return {
+                ...state,
+                myBookings: [...state.myBookings, action.payload]
+            };
         default:
             return state;
     }
