@@ -49,12 +49,17 @@ Fistly, I did not use connect in this project. All are done with hooks.
     - This components folder is actually divided into a few different folders. Every file in the **containers** folder has their own component folder. The same architecture as the `Netflix clone project`.
     
  - All of the actions are used in the container files and all of the container files are imported in the **Pages** folder. 
+ 
+ - The **utils** folder keeps all of the svg images that are used in the project
+
+ - There is a *global-styles* which has all the default styles for the all pages
 
  - All of the states are in the **state.js** file with their default values.
 
 -   If I had more time, I would make my code much cleaner and spend more time on the styles. Finishing the account page well and fixing bugs that I have in the booking seats page. I would refactor my code and style it much better.
 
-- I have learned so much about using *redux* with *compound-component*. I wanted to use `react-modal` for the modal but I did not have time. Next time!
+- I have learned so much about using *redux* with *compound-components*. I wanted to use `react-modal` for the modal but I did not have time. Next time!
+
 
 - The most challenging part for me is the booking page and the account page.
 
@@ -92,4 +97,4 @@ $ parcel index.html
 ## Contact
 <!-- 
 -   Website [your-website.com](https://{your-web-site-link}) -->
--   GitHub [ganamavo](https://{github.com/ganamavo})
+-   GitHub [ganamavo](https://github.com/ganamavo)
