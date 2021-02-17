@@ -39941,14 +39941,13 @@ function BookSeatsContainer() {
     return dateFormated;
   }
 
-  console.log(bookingSeat);
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, bookingSeat !== [] ? bookingSeat.map(seat => {
     return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, {
       key: seat?.id
     }, /*#__PURE__*/_react.default.createElement(_components.Header.PageTitleContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Image, {
       src: _taxiBrousse.default,
       alt: "A taxi image"
-    }), /*#__PURE__*/_react.default.createElement(_components.Header.PageTitle, null, "Book a set to", /*#__PURE__*/_react.default.createElement(_components.Header.Span, null, seat?.destination))), /*#__PURE__*/_react.default.createElement(_components.BookSeats, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Frame, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Subtitle, null, "Pick a seat"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.SeatsContainer, null, seat?.seats.map(seat => {
+    }), /*#__PURE__*/_react.default.createElement(_components.Header.PageTitle, null, "Book a seat to", /*#__PURE__*/_react.default.createElement(_components.Header.Span, null, seat?.destination))), /*#__PURE__*/_react.default.createElement(_components.BookSeats, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Frame, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Subtitle, null, "Pick a seat"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.SeatsContainer, null, seat?.seats.map(seat => {
       return seat?.isAvailable && !seat?.picked || seat?.isAvailable && seat?.picked ? /*#__PURE__*/_react.default.createElement(_components.BookSeats.Image, {
         key: seat?.id,
         onClick: e => {

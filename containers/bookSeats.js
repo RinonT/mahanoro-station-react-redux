@@ -35,8 +35,7 @@ export default function BookSeatsContainer() {
         let dateFormated = date.replace(/(\d+)\/(\d+)\/(\d+)/g, "$2/0$1/$3");
         return dateFormated;
     }
-
-    console.log(bookingSeat)
+ 
     return (
         <React.Fragment>
             {
@@ -45,7 +44,7 @@ export default function BookSeatsContainer() {
                         <Header.PageTitleContainer>
                             <BookSeats.Image src={taxiBrousseIcon} alt="A taxi image" />
                             <Header.PageTitle>
-                                Book a set to
+                                Book a seat to
                             <Header.Span>{seat?.destination}</Header.Span>
                             </Header.PageTitle>
                         </Header.PageTitleContainer>
