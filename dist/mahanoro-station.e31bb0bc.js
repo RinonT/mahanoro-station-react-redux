@@ -38170,13 +38170,14 @@ var _styledComponents = require("styled-components");
 
 const GlobalStyles = (0, _styledComponents.createGlobalStyle)`
     html, body {
-        font-family: Rubik;
+        font-family: 'Rubik', sans-serif;
         font-style: normal;
         font-weight: normal;
         margin: 0;
         padding: 0;
         button {
             cursor: pointer;
+            outline: none;
         }
         a {
             text-decoration: none;
@@ -38541,7 +38542,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const Container = _styledComponents.default.header`
     background: #0F0E17;
-    margin-bottom: 112px;
+    margin-bottom: 55px;
     padding-top: 28px;
     padding-bottom: 28px;
     padding-left: 32px;
@@ -38718,7 +38719,7 @@ Header.PageTitle = function HeaderPageTitle({
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CityName = exports.Icon = exports.CityNameContainer = exports.Container = void 0;
+exports.CityName = exports.Icon = exports.CityNameContainer = exports.HeaderContainer = exports.Container = void 0;
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
@@ -38734,6 +38735,17 @@ const Container = _styledComponents.default.div`
     }
 `;
 exports.Container = Container;
+const HeaderContainer = _styledComponents.default.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 55px;
+    img {
+        width: 128px;
+        height: 128px;
+    }
+`;
+exports.HeaderContainer = HeaderContainer;
 const CityNameContainer = _styledComponents.default.div`
     display: flex;
     background-color: #000000;
@@ -38782,6 +38794,13 @@ function Trips({
 }) {
   return /*#__PURE__*/_react.default.createElement(_trips.Container, restProps, children);
 }
+
+Trips.HeaderContainer = function TripsHeaderContainer({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_trips.HeaderContainer, restProps, children);
+};
 
 Trips.CityNameContainer = function TripsCityNameContainer({
   children,
@@ -38959,7 +38978,7 @@ NextTrips.Button = function NextTripsButton({
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TotalPrice = exports.BookingButton = exports.Price = exports.BookingContainer = exports.Info = exports.InfoContainer = exports.Image = exports.Subtitle = exports.Frame = exports.Container = void 0;
+exports.TotalPrice = exports.BookingButton = exports.Price = exports.BookingContainer = exports.Info = exports.InfoContainer = exports.Image = exports.SeatsContainer = exports.Subtitle = exports.Frame = exports.Container = void 0;
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
@@ -39007,10 +39026,74 @@ const Info = _styledComponents.default.span`
     }
 `;
 exports.Info = Info;
-const BookingContainer = _styledComponents.default.div`
-    
-`;
+const BookingContainer = _styledComponents.default.div``;
 exports.BookingContainer = BookingContainer;
+const SeatsContainer = _styledComponents.default.div`
+    display: grid;
+    grid-template-columns: 60px 60px 60px 60px;
+    grid-template-areas: "blank blank image1 image2"
+                          "image3 image4 image5 image6"
+                          "image7 image8 image9 image10"
+                          "image11 image12 image13 image14"
+                          "image15 image16 image17 image18";
+
+    img:nth-of-type(1) {
+        grid-area: image1; 
+    }
+
+    img:nth-of-type(2) {
+        grid-area: image2;
+    }
+     img:nth-of-type(3) {
+        grid-area: image3;
+    }
+     img:nth-of-type(4) {
+        grid-area: image4;
+    }
+     img:nth-of-type(5) {
+        grid-area: image5;
+    }
+     img:nth-of-type(6) {
+        grid-area: image6;
+    }
+     img:nth-of-type(7) {
+        grid-area: image7;
+    }
+     img:nth-of-type(8) {
+        grid-area: image8;
+    }
+     img:nth-of-type(9) {
+        grid-area: image9;
+    }
+     img:nth-of-type(10) {
+        grid-area: image10;
+    }
+     img:nth-of-type(11) {
+        grid-area: image11;
+    }
+     img:nth-of-type(12) {
+        grid-area: image12;
+    }
+     img:nth-of-type(13) {
+        grid-area: image13;
+    }
+     img:nth-of-type(14) {
+        grid-area: image14;
+    }
+     img:nth-of-type(15) {
+        grid-area: image15;
+    }
+     img:nth-of-type(16) {
+        grid-area: image16;
+    }
+    img:nth-of-type(17) {
+        grid-area: image17;
+    }
+    img:nth-of-type(18) {
+        grid-area: image18;
+    }
+`;
+exports.SeatsContainer = SeatsContainer;
 const Price = _styledComponents.default.p`
     font-weight: 500;
     font-size: 48px;
@@ -39075,6 +39158,13 @@ BookingSeats.Subtitle = function BookingSeatsSubtitle({
   restProps
 }) {
   return /*#__PURE__*/_react.default.createElement(_bookSeats.Subtitle, restProps, children);
+};
+
+BookingSeats.SeatsContainer = function BookingSeatsSeatsContainer({
+  children,
+  restProps
+}) {
+  return /*#__PURE__*/_react.default.createElement(_bookSeats.SeatsContainer, restProps, children);
 };
 
 BookingSeats.Image = function BookingSeatsImage({
@@ -39606,6 +39696,8 @@ var _modal = _interopRequireDefault(require("./modal"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 },{"./header":"components/header/index.js","./trips":"components/trips/index.js","./nextTrips":"components/nextTrips/index.js","./bookSeats":"components/bookSeats/index.js","./account":"components/account/index.js","./modal":"components/modal/index.js"}],"utils/thumbs-up.svg":[function(require,module,exports) {
 module.exports = "/thumbs-up.bc4ac3c8.svg";
+},{}],"utils/taxi-brousse.svg":[function(require,module,exports) {
+module.exports = "/taxi-brousse.da4918af.svg";
 },{}],"containers/home.js":[function(require,module,exports) {
 "use strict";
 
@@ -39625,6 +39717,8 @@ var _actions = require("../actions");
 var _components = require("../components");
 
 var _thumbsUp = _interopRequireDefault(require("../utils/thumbs-up.svg"));
+
+var _taxiBrousse = _interopRequireDefault(require("../utils/taxi-brousse.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -39654,12 +39748,13 @@ function HomeContainer() {
       to: `/city/${destination}`
     }, /*#__PURE__*/_react.default.createElement(_components.Trips.CityName, null, destination)));
   });
-  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_components.Trips, null, cityNamesEl));
+  return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_components.Trips.HeaderContainer, null, /*#__PURE__*/_react.default.createElement(_components.Trips.Icon, {
+    src: _taxiBrousse.default,
+    alt: "A clock image"
+  }), /*#__PURE__*/_react.default.createElement(_components.Header.PageTitle, null, "Where are you going?")), /*#__PURE__*/_react.default.createElement(_components.Trips, null, cityNamesEl));
 }
-},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../actions":"actions/index.js","../components":"components/index.js","../utils/thumbs-up.svg":"utils/thumbs-up.svg"}],"utils/alarm-clock.svg":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","../actions":"actions/index.js","../components":"components/index.js","../utils/thumbs-up.svg":"utils/thumbs-up.svg","../utils/taxi-brousse.svg":"utils/taxi-brousse.svg"}],"utils/alarm-clock.svg":[function(require,module,exports) {
 module.exports = "/alarm-clock.b8cc7020.svg";
-},{}],"utils/taxi-brousse.svg":[function(require,module,exports) {
-module.exports = "/taxi-brousse.da4918af.svg";
 },{}],"containers/nextTrips.js":[function(require,module,exports) {
 "use strict";
 
@@ -39853,7 +39948,7 @@ function BookSeatsContainer() {
     }, /*#__PURE__*/_react.default.createElement(_components.Header.PageTitleContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Image, {
       src: _taxiBrousse.default,
       alt: "A taxi image"
-    }), /*#__PURE__*/_react.default.createElement(_components.Header.PageTitle, null, "Book a set to", /*#__PURE__*/_react.default.createElement(_components.Header.Span, null, seat?.destination))), /*#__PURE__*/_react.default.createElement(_components.BookSeats, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Frame, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Subtitle, null, "Pick a seat"), seat?.seats.map(seat => {
+    }), /*#__PURE__*/_react.default.createElement(_components.Header.PageTitle, null, "Book a set to", /*#__PURE__*/_react.default.createElement(_components.Header.Span, null, seat?.destination))), /*#__PURE__*/_react.default.createElement(_components.BookSeats, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Frame, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Subtitle, null, "Pick a seat"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.SeatsContainer, null, seat?.seats.map(seat => {
       return seat?.isAvailable && !seat?.picked || seat?.isAvailable && seat?.picked ? /*#__PURE__*/_react.default.createElement(_components.BookSeats.Image, {
         key: seat?.id,
         onClick: e => {
@@ -39874,7 +39969,7 @@ function BookSeatsContainer() {
         src: _reservedSeat.default,
         alt: "Cars"
       });
-    })), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Frame, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Subtitle, null, "Trip information: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Departure time: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, `${`${new Date(seat?.departureTime).getHours()}:${new Date(seat?.departureTime).getMinutes() < 10 ? "0" + new Date(seat?.departureTime).getMinutes() : new Date(seat?.departureTime).getMinutes()}`}, ${getDates(seat?.departureTime)}`)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Driver: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, seat?.driverName)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Driver's contact: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, seat?.driverContact)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Estimated duration: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, seat?.estimatedDuration)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Breaks: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, seat?.breaks)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.BookingContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Price, null, seat?.price, " Ar/seat"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.BookingButton, {
+    }))), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Frame, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Subtitle, null, "Trip information: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Departure time: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, `${`${new Date(seat?.departureTime).getHours()}:${new Date(seat?.departureTime).getMinutes() < 10 ? "0" + new Date(seat?.departureTime).getMinutes() : new Date(seat?.departureTime).getMinutes()}`}, ${getDates(seat?.departureTime)}`)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Driver: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, seat?.driverName)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Driver's contact: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, seat?.driverContact)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Estimated duration: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, seat?.estimatedDuration)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.InfoContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, "Breaks: "), /*#__PURE__*/_react.default.createElement(_components.BookSeats.Info, null, seat?.breaks)), /*#__PURE__*/_react.default.createElement(_components.BookSeats.BookingContainer, null, /*#__PURE__*/_react.default.createElement(_components.BookSeats.Price, null, seat?.price, " Ar/seat"), /*#__PURE__*/_react.default.createElement(_components.BookSeats.BookingButton, {
       onClick: () => dispatch((0, _actions.showModal)(true))
     }, "Book ", `${pickSeats.length < 2}` ? `${pickSeats.length}  seat` : `${pickSeats.length} seats`), /*#__PURE__*/_react.default.createElement(_components.BookSeats.TotalPrice, null, pickSeats.length > 1 ? seat?.price * pickSeats.length : seat?.price, " Ar")))), isModalDisplayed && /*#__PURE__*/_react.default.createElement(_modal.default, {
       exitModal: () => dispatch((0, _actions.showModal)(false)),

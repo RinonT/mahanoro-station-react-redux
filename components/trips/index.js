@@ -1,10 +1,14 @@
 import React from 'react';
-import {Container, CityNameContainer, Icon, CityName } from './styles/trips';
+import {Container, HeaderContainer, CityNameContainer, Icon, CityName } from './styles/trips';
 
 export default function Trips({children, restProps}) {
    return <Container {...restProps}>
         {children}
     </Container>
+}
+
+Trips.HeaderContainer = function TripsHeaderContainer({children, restProps}) {
+    return <HeaderContainer {...restProps}>{children}</HeaderContainer>
 }
 
 Trips.CityNameContainer = function TripsCityNameContainer({children, restProps}) {
