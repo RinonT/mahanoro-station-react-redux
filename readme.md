@@ -6,7 +6,7 @@ The challenge is to build out this app and get it working with redux, compound c
 
 <div align="center">
   <h3>
-    <a href="https://mahanoro-station-rinon.netlify.app/"> 
+    <a href="https://mahanoro-station-rinon.netlify.app/" > 
       Demo
     </a>
     <span> | </span>
